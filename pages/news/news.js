@@ -11,10 +11,10 @@ Page({
     var that = this
     // 访问聚合数据的网络接口-头条新闻
     wx.request({
-      url: app.globalData.juhetoutiaoBase,
+      url: app.globalData.toutiaoBase,
       data: {
         type: 'guoji',
-        key: app.globalData.juhetoutiaoKey
+        key: app.globalData.toutiaoKey
       },
       header: {
         'Content-Type': 'application/json'

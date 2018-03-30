@@ -18,7 +18,7 @@ Page({
     var that = this;
     // 新建百度地图对象 
     var BMap = new bmap.BMapWX({
-      ak: 'heTp7eyEK8d6cWplVB2VpXcmZywnhQfo'
+      ak: 'BmGEqlUhIwl7GmzXg9NM07WVreMVkn8u'
     });
     that.setData({
       bitmap: BMap

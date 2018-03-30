@@ -13,11 +13,11 @@ Page({
   
   onLoad: function (event) {
     var inTheatersUrl = app.globalData.doubanBase +
-      "/v2/movie/in_theaters" + "?start=0&count=6";
+      "/v2/movie/in_theaters" + "?apikey=0b2bdeda43b5688921839c8ecb20399b&start=0&count=6";
     var comingSoonUrl = app.globalData.doubanBase +
-      "/v2/movie/coming_soon" + "?start=0&count=6";
+      "/v2/movie/coming_soon" + "?apikey=0b2bdeda43b5688921839c8ecb20399b&start=0&count=6";
     var top250Url = app.globalData.doubanBase +
-      "/v2/movie/top250" + "?start=0&count=6";
+      "/v2/movie/top250" + "?apikey=0b2bdeda43b5688921839c8ecb20399b&start=0&count=6";
     this.getMovieListData(inTheatersUrl, "inTheaters", "正在热映");
     this.getMovieListData(comingSoonUrl, "comingSoon", "即将上映");
     this.getMovieListData(top250Url, "top250", "豆瓣Top250");

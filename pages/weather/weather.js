@@ -8,7 +8,9 @@ Page({
     district:'', //区域
     now:'',
     forecast:'',//七日天气预报
-    quality:'' //空气质量
+    wind_sc: '',
+    fl_tmp:'',
+    curDate: ''
   },
 
   onLoad: function () {
@@ -33,11 +35,16 @@ Page({
   //从全局变量直接获取天气信息，首页加载时存的
   getWeather: function (city) {
     var that = this;
+    let wD = app.globalData.weatherData;
     that.setData({
-          now: app.globalData.weatherData.now, //今天天气情况数组 
-          forecast: app.globalData.weatherData.daily_forecast,
-          quality: app.globalData.air
+      now: wD, //今天天气情况数组 
+      forecast: app.globalData.forecast,
+      quality: wD.air,
+      wind_sc: wD.wind.slice(-2),
+      fl_tmp: wD.date.slice(wD.date.indexOf("：")+1,-1),
+      curDate: wD.date.slice(0,9)
     });
+    console.log(that.data.forecast);
   },
 
   bindCity: function (e) {

@@ -2,26 +2,26 @@
 <image class="bg" mode="aspectFill" src="http://img0.imgtn.bdimg.com/it/u=2119753535,4266859939&fm=214&gp=0.jpg"></image>
 <view class="wrapper">
   <view class="curWeather">
-    <view class="curTemperature">
-      <view class="tmp">{{now.tmp}}°</view>
+    <view class="curDate">
+      <view class="tmp"> {{ curDate }} </view>
       <view class="city" bindtap="bindCity">{{city}}{{district}}</view>
-      <view class="type">{{now.cond_txt}} | 空气 {{quality.qlty}}</view>
+      <view class="type">{{now.weatherDesc}} | 空气：{{now.pm25}}</view>
     </view>
     <view class="curExtern">
       <view class="wind">
-        <view class="">{{now.wind_dir}}</view>
-        <view wx:if="{{now.wind_sc=='微风'}}" class="val">{{"<="}}2级</view>
+        <view class="">{{now.wind}}</view>
+        <view wx:if="{{wind_sc=='微风'}}" class="val">2级</view>
         <view wx:else class="val">{{now.wind_sc}}级</view>
       </view>
       <view class="line"></view>
-      <view class="relWet">
-        <view class="">相对湿度</view>
-        <view class="val">{{now.hum}}%</view>
+      <view class="temperature">
+        <view class="temp-title">高低温差</view>
+        <view class="val">{{now.temperature}}</view>
       </view>
       <view class="line"></view>
       <view class="humanTmp">
         <view class="">体感温度</view>
-        <view class="val">{{now.fl}}°</view>
+        <view class="val">{{fl_tmp}}</view>
       </view>
     </view>
   </view>

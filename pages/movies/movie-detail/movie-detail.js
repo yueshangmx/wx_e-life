@@ -8,7 +8,7 @@ Page({
     onLoad: function(options) {
         var movieId = options.id;
         var url = app.globalData.doubanBase +
-            "/v2/movie/subject/" + movieId;
+          "/v2/movie/subject/" + movieId + "?apikey=0b2bdeda43b5688921839c8ecb20399b";
         var movie = new Movie(url);
         // var movieData = movie.getMovieData();
         // var that = this;

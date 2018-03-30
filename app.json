@@ -5,7 +5,6 @@
     "pages/movies/movies",
     "pages/switchcity/switchcity",
     "pages/weather/weather",
-    "pages/news/news",
     "pages/movies/movie-detail/movie-detail",
     "pages/movies/more-movie/more-movie",
     "pages/map/map",
@@ -15,7 +14,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#2a579a",
-    "navigationBarTitleText": "e 生活",
+    "navigationBarTitleText": "e Life",
     "navigationBarTextStyle": "white"
   },
   "tabBar": {
@@ -37,13 +36,10 @@
         "text": "电影"
       },
       {
-        "pagePath": "pages/news/news",
-        "text": "新闻"
-      },
-      {
         "pagePath": "pages/more/more",
         "text": "更多"
       }
     ]
-  }
+  },
+  "debug":true
 }

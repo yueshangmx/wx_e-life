@@ -21,14 +21,14 @@
   width:750rpx;
 }
 
-.curTemperature{
+.curDate{
   color:#fff;
   font-size: 0.8em;
   flex-grow: 1;/*表示将剩余的空间分配给它*/
 }
 
 .tmp{
-  font-size: 5em;
+  font-size: 2em;
 }
 .curExtern{
   display: flex;
@@ -36,9 +36,12 @@
   justify-content: space-around;
   color:#fff;
 }
+.temp-title{
+  text-align: center;
+}
 .val{
   text-align: center;
-  font-size: 1.2em;
+  font-size: 1em;
 }
 .line{
   border:0.9rpx solid #fff;

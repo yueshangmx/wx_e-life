@@ -1,5 +1,7 @@
 var app = getApp();
 var util = require('../../utils/util.js');
+let bmap = require('../../libs/bmap-wx.min.js');
+let wxMarkerData = [];
 Page({
 
   /**
@@ -8,17 +10,17 @@ Page({
   data: {
     location: '',
     county: '',
+    today: "",
+    weatherData: '',
+    air: '',
+    dress: '',
     sliderList: [
       { selected: true, imageSource: 'http://up.enterdesk.com/edpic/7d/35/13/7d3513ecabdf1f7eb4f1407f0e82f23c.jpg' },
       { selected: false, imageSource: '../../images/2.jpg' },
       { selected: false, imageSource: 'http://pic1.win4000.com/wallpaper/9/538544be6ae36.jpg' },
     ],
-    today: "",
     inTheaters: {},
-    containerShow: true,
-    weatherData: '',
-    air: '',
-    dress: ''
+    containerShow: true
   },
 
   onLoad: function (options) {
@@ -29,9 +31,10 @@ Page({
     });
     //定位当前城市
     this.getLocation();
+    
     //获取豆瓣电影正在热映信息
     var inTheatersUrl = app.globalData.doubanBase +
-      "/v2/movie/in_theaters" + "?start=0&count=6";
+      "/v2/movie/in_theaters" +"?apikey=0b2bdeda43b5688921839c8ecb20399b"+ "&start=0&count=6";
     this.getMovieListData(inTheatersUrl, "inTheaters", "正在热映");
 
     //获取用户信息
@@ -95,28 +98,32 @@ Page({
   //定位当前城市
   getLocation: function () {
     var that = this;
-    wx.getLocation({
-      type: 'wgs84',
-      success: function (res) {
-        //当前的经度和纬度
-        let latitude = res.latitude
-        let longitude = res.longitude
-        wx.request({
-          url: `https://apis.map.qq.com/ws/geocoder/v1/?location=${latitude},${longitude}&key=${app.globalData.tencentMapKey}`,
-          success: res => {
-            app.globalData.defaultCity = app.globalData.defaultCity ? app.globalData.defaultCity:res.data.result.ad_info.city;
-            app.globalData.defaultCounty = app.globalData.defaultCounty ? app.globalData.defaultCounty :res.data.result.ad_info.district;
-            that.setData({
-              location: app.globalData.defaultCity,
-              county: app.globalData.defaultCounty
-            });
-            that.getWeather();
-            that.getAir();
-          }
-        })
-      }
-    })
-  },
+    /* 获取定位地理位置 */
+    // 新建bmap对象   
+    var BMap = new bmap.BMapWX({
+      ak: app.globalData.bmapak
+    });
+    var fail = function (data) {
+      console.log(data);
+    };
+    var success = function (data) {
+      //使用wxMarkerData获取数据  
+      wxMarkerData = data.originalData.result.addressComponent;
+      app.globalData.defaultCity = app.globalData.defaultCity ? app.globalData.defaultCity : wxMarkerData.city;
+      app.globalData.defaultCounty = app.globalData.defaultCounty ? app.globalData.defaultCounty : wxMarkerData.district;
+      that.setData({
+        location: app.globalData.defaultCity,
+        county: app.globalData.defaultCounty
+      });
+      that.getWeather();
+      //that.getAir();
+    }
+    // 发起regeocoding检索请求   
+    BMap.regeocoding({
+      fail: fail,
+      success: success
+    }); 
+  },          
 
   //引入了电影模板，绑定了点击方法，这里写跳转方法即可
   onMovieTap: function (event) {
@@ -134,56 +141,32 @@ Page({
 
   //获取天气
   getWeather: function (e) {
-    var length = this.data.location.length;
-    var city = this.data.location.slice(0, length-1); //分割字符串
-    console.log(city);
     var that = this;
-    var param = {
-      key: app.globalData.heWeatherKey,
-      location: city
+    // 新建百度地图对象 
+    var BMap = new bmap.BMapWX({
+      ak: 'BmGEqlUhIwl7GmzXg9NM07WVreMVkn8u'
+    });
+    var fail = function (data) {
+      console.log(data)
     };
-    //发出请求
-    wx.request({
-      url: app.globalData.heWeatherBase + "/s6/weather",
-      data: param,
-      header: {
-        'content-type': 'application/json'
-      },
-      success: function (res) {
-        app.globalData.weatherData = res.data.HeWeather6[0].status == "unknown city" ? "" : res.data.HeWeather6[0];
-        var weatherData = app.globalData.weatherData ? app.globalData.weatherData.now : "暂无该城市天气信息";
-        var dress = app.globalData.weatherData ? res.data.HeWeather6[0].lifestyle[1] : { txt: "暂无该城市天气信息"};
-        that.setData({
-          weatherData: weatherData, //今天天气情况数组 
-          dress: dress //生活指数
-        });
-      }
-    })
+    var success = function (data) {
+      let weatherData = data.currentWeather[0];
+      let dress = data.originalData.results[0].index;
+      app.globalData.weatherData = weatherData;
+      app.globalData.forecast = data.originalData.results[0].weather_data;
+      that.setData({
+        weatherData: weatherData,
+        dress: dress
+      });
+      console.log(that.data.dress);
+    }
+    // 发起weather请求 
+    BMap.weather({
+      fail: fail,
+      success: success
+    });    
   },
-  //获取当前空气质量情况
-  getAir: function (e) {
-    var length = this.data.location.length;
-    var city = this.data.location.slice(0, length - 1);
-    var that = this;
-    var param = {
-      key: app.globalData.heWeatherKey,
-      location: city
-    };
-    wx.request({
-      url: app.globalData.heWeatherBase + "/s6/air/now",
-      data: param,
-      header: {
-        'content-type': 'application/json'
-      },
-      success: function (res) {
-        app.globalData.air = res.data.HeWeather6[0].status == "unknown city" ? "" : res.data.HeWeather6[0].air_now_city;
-        that.setData({
-          air: app.globalData.air
-        });
-      }
-    })
-  },
-
+  
   //点击更改定位切换到城市页面
   jump: function () {
     //关闭本页去切换城市，返回时就可以重新初始化定位信息哦

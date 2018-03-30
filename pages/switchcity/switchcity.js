@@ -1,8 +1,9 @@
 const city = require('../../utils/util.js');
+let bmap = require('../../libs/bmap-wx.min.js');
 const appInstance = getApp();
 Page({
-
   data: {
+    wxMarkerData:{},
     searchLetter: [],
     showLetter: "",
     winHeight: 0,
@@ -73,30 +74,34 @@ Page({
       county: ''
     })
     const that = this;
-    wx.getLocation({
-      type: 'wgs84',
-      success: function (res) {
-        //当前的经度和纬度
-        let latitude = res.latitude
-        let longitude = res.longitude
-        wx.request({
-          url: `https://apis.map.qq.com/ws/geocoder/v1/?location=${latitude},${longitude}&key=${appInstance.globalData.tencentMapKey}`,
-          success: res => {
-            that.setData({
-              city: res.data.result.ad_info.city,
-              currentCityCode: res.data.result.ad_info.adcode,
-              county: res.data.result.ad_info.district
-            })
-          }
-        })
-      }
-    })
+    var BMap = new bmap.BMapWX({
+      ak: appInstance.globalData.bmapak
+    });
+    var fail = function (data) {
+      console.log(data);
+    };
+    var success = function (data) {
+      //使用wxMarkerData获取数据  
+      this.wxMarkerData = data.originalData.result.addressComponent;
+      that.setData({
+        city: this.wxMarkerData.city,
+        currentCityCode: this.wxMarkerData.adcode,
+        county: this.wxMarkerData.district,
+      });
+    }
+    // 发起regeocoding检索请求   
+    BMap.regeocoding({
+      fail: fail,
+      success: success
+    });
   },
+
   //获取当前选择城市的区县
   selectCounty: function () {
     let code = this.data.currentCityCode
     const that = this;
-    wx.request({
+    console.log(this.wxMarkerData);
+    /*wx.request({
       url: `https://apis.map.qq.com/ws/district/v1/getchildren?&id=${code}&key=${appInstance.globalData.tencentMapKey}`,
       success: function (res) {
         that.setData({
@@ -106,7 +111,7 @@ Page({
       fail: function () {
         console.log("请求区县失败，请重试");
       }
-    })
+    })*/
   },
   //重新定位城市
   reGetLocation: function () {
