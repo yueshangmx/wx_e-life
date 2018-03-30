@@ -30,11 +30,11 @@
       <view class="castItem">
         <view class="castDay">{{showday[index]}}</view>
         <view class="castType">
-          <image class="typeImg" src="../../images/weather/{{fc.cond_code_d}}.png"></image>
-          {{fc.cond_txt_d}} | {{fc.wind_sc}}
+          <image class="typeImg" src="{{ fc.dayPictureUrl }}"></image>
+          {{fc.weather}} | {{fc.wind}}
         </view>
         <view class="castTmp">
-          {{fc.tmp_max}}° / {{fc.tmp_min}}°
+          {{fc.temperature}}
         </view>
       </view>
     </block>

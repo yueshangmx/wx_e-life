@@ -12,12 +12,11 @@ Page({
     county: '',
     today: "",
     weatherData: '',
-    air: '',
     dress: '',
     sliderList: [
-      { selected: true, imageSource: 'http://up.enterdesk.com/edpic/7d/35/13/7d3513ecabdf1f7eb4f1407f0e82f23c.jpg' },
-      { selected: false, imageSource: '../../images/2.jpg' },
-      { selected: false, imageSource: 'http://pic1.win4000.com/wallpaper/9/538544be6ae36.jpg' },
+      { selected: true, imageSource: '' },
+      { selected: false, imageSource: '' },
+      { selected: false, imageSource: '' },
     ],
     inTheaters: {},
     containerShow: true
@@ -29,6 +28,9 @@ Page({
     this.setData({
       today: app.globalData.day
     });
+    //获取bing壁纸
+    this.getBing();
+
     //定位当前城市
     this.getLocation();
     
@@ -48,6 +50,25 @@ Page({
       }
     })
 
+  },
+  getBing: function () {
+    let that=this;
+    wx.request({
+      url: app.globalData.bingBase+'/HPImageArchive.aspx?format=js&idx=0&n=3',
+      method: 'GET',
+      header:{
+        "Content-Type": "json"
+      },
+      success: function(res){
+        let imgData = res.data.images;
+        for(let i=0,len=imgData.length;i<len;i++){
+          that.data.sliderList[i].imageSource =app.globalData.bingBase + imgData[i].url
+        }
+      },
+      fail: function(error){
+        console.log(error);
+      }
+    })
   },
 
   //调用豆瓣api
@@ -158,7 +179,6 @@ Page({
         weatherData: weatherData,
         dress: dress
       });
-      console.log(that.data.dress);
     }
     // 发起weather请求 
     BMap.weather({

@@ -16,6 +16,7 @@ App({
     bmapak: 'BmGEqlUhIwl7GmzXg9NM07WVreMVkn8u',
     g_isPlayingMusic: false,
     g_currentMusicPostId: null,
+    bingBase: "https://cn.bing.com",
     doubanBase: "https://api.douban.com",
     miWeatherBase: "https://weatherapi.market.xiaomi.com",
     toutiaoBase:"https://v.juhe.cn/toutiao/index",

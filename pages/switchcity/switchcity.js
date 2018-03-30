@@ -1,5 +1,6 @@
 const city = require('../../utils/util.js');
 let bmap = require('../../libs/bmap-wx.min.js');
+let addr = require('../../libs/addr.js');
 const appInstance = getApp();
 Page({
   data: {
@@ -100,18 +101,24 @@ Page({
   selectCounty: function () {
     let code = this.data.currentCityCode
     const that = this;
-    console.log(this.wxMarkerData);
-    /*wx.request({
-      url: `https://apis.map.qq.com/ws/district/v1/getchildren?&id=${code}&key=${appInstance.globalData.tencentMapKey}`,
-      success: function (res) {
-        that.setData({
-          countyList: res.data.result[0],
-        })
-      },
-      fail: function () {
-        console.log("请求区县失败，请重试");
+    console.log(code);
+    let addtData = addr.addrdata();
+    let countyList = [];
+    for(let i=0,len=addrData.length;i<len;i++){
+      if(addrData[i].code == code){
+        countyList = addrData[i].city[0].area;
+      }else{
+        for(let j=0,leng=addrData[i].city.length;j<leng;j++){
+          if(addrData[i].city[j].code == code){
+            countyList = addrData[i].city[j].area
+          }
+        }
       }
-    })*/
+    }
+    this.setData({
+      countyList: countyList
+    })
+    
   },
   //重新定位城市
   reGetLocation: function () {
@@ -215,7 +222,7 @@ Page({
   onShareAppMessage: function () {
     return {
       title: '很赞的全国城市切换器~',
-      desc: '分享个小程序，希望你喜欢☺️~',
+      desc: '分享个小程序，希望你喜欢',
       success: function (res) {
         // 转发成功
         wx.showToast({

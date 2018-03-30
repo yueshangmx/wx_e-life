@@ -17,14 +17,14 @@ Page({
     switch (category) {
       case "正在热映":
         dataUrl = app.globalData.doubanBase +
-          "/v2/movie/in_theaters";
+          "/v2/movie/in_theaters?apikey=0b2bdeda43b5688921839c8ecb20399b";
         break;
       case "即将上映":
         dataUrl = app.globalData.doubanBase +
-          "/v2/movie/coming_soon";
+          "/v2/movie/coming_soon?apikey=0b2bdeda43b5688921839c8ecb20399b";
         break;
       case "豆瓣Top250":
-        dataUrl = app.globalData.doubanBase + "/v2/movie/top250";
+        dataUrl = app.globalData.doubanBase + "/v2/movie/top250?apikey=0b2bdeda43b5688921839c8ecb20399b";
         break;
     }
     wx.setNavigationBarTitle({
@@ -35,7 +35,7 @@ Page({
   },
   onPullDownRefresh: function (event) {
     var refreshUrl = this.data.requestUrl +
-      "?apikey=0b2bdeda43b5688921839c8ecb20399b&star=0&count=20"
+      "&star=0&count=20"
     this.data.movies = {};
     this.data.isEmpty = true;
     this.data.totalCount = 0;
@@ -44,8 +44,7 @@ Page({
   },
   onReachBottom: function (event) {
     // 上滑加载
-    var nextUrl = this.data.requestUrl +
-      "?apikey=0b2bdeda43b5688921839c8ecb20399b&start=" + this.data.totalCount + "&count=20";
+    var nextUrl = this.data.requestUrl +"&start="+ this.data.totalCount + "&count=20";
     util.http(nextUrl, this.processDoubanData)
     wx.showNavigationBarLoading()
   },

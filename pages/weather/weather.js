@@ -19,6 +19,7 @@ Page({
     //设置数组第三个是周几
     that.setData({
       'showday[2]': this.data.weekday[(date.getDay() + 2) % 7],
+      'showday[3]': this.data.weekday[(date.getDay() + 3) % 7],
     });
   },
 
@@ -39,7 +40,6 @@ Page({
     that.setData({
       now: wD, //今天天气情况数组 
       forecast: app.globalData.forecast,
-      quality: wD.air,
       wind_sc: wD.wind.slice(-2),
       fl_tmp: wD.date.slice(wD.date.indexOf("：")+1,-1),
       curDate: wD.date.slice(0,9)
