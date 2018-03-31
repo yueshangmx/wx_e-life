@@ -101,8 +101,7 @@ Page({
   selectCounty: function () {
     let code = this.data.currentCityCode
     const that = this;
-    console.log(code);
-    let addtData = addr.addrdata();
+    let addrData = addr.addrdata();
     let countyList = [];
     for(let i=0,len=addrData.length;i<len;i++){
       if(addrData[i].code == code){

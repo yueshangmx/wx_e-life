@@ -1,6 +1,7 @@
+let app = getApp();
 // pages/welcome/welcome.js
 Page({
-
+  
   clickLogo:function(){
     wx.reLaunch({
       url: '../index/index'

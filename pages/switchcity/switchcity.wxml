@@ -25,7 +25,7 @@
     <scroll-view scroll-y="true" style="height:{{winHeight}}px" scroll-into-view="{{scrollTopId}}" scroll-top="{{scrollTop}}">
       <!-- 匹配结果列表 -->
       <ul class="ul">
-        <li wx:for="{{completeList}}" wx:key="*this" bindtap="bindCity" data-city="{{item.city}}" data-code="{{item.code}}" class="li">{{item.city}}</li>
+        <li wx:for="{{completeList}}" wx:key="key" bindtap="bindCity" data-city="{{item.city}}" data-code="{{item.code}}" class="li">{{item.city}}</li>
       </ul>
 
       <view wx:if="{{condition}}" class="hotcity-common">选择区县</view>

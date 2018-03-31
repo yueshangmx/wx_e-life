@@ -3,7 +3,7 @@ Page({
 
   data: {
     topNews: [],
-    newsType: 'guoji',
+    newsType: 'top',
     selsectState: [1, 0, 0, 0, 0]
   },
 
@@ -13,7 +13,7 @@ Page({
     wx.request({
       url: app.globalData.toutiaoBase,
       data: {
-        type: 'guoji',
+        type: 'top',
         key: app.globalData.toutiaoKey
       },
       header: {
@@ -56,28 +56,28 @@ Page({
 
   clickNation: function () {
     this.setData({
-      newsType: 'guoji',
+      newsType: 'top',
       selsectState: [1, 0, 0, 0, 0]
     })
     this.getNews();
   },
   clickSport: function () {
     this.setData({
-      newsType: 'tiyu',
+      newsType: 'shehui',
       selsectState: [0, 1, 0, 0, 0]
     })
     this.getNews();
   },
   clickScience: function () {
     this.setData({
-      newsType: 'keji',
+      newsType: 'guonei',
       selsectState: [0, 0, 1, 0, 0]
     })
     this.getNews();
   },
   clickHappy: function () {
     this.setData({
-      newsType: 'yule',
+      newsType: 'keji',
       selsectState: [0, 0, 0, 1, 0]
     })
     this.getNews();
@@ -94,10 +94,10 @@ Page({
     var that = this
     // 访问聚合数据的网络接口-头条新闻
     wx.request({
-      url: app.globalData.juhetoutiaoBase,
+      url: app.globalData.toutiaoBase,
       data: {
         type: this.data.newsType,
-        key: app.globalData.juhetoutiaoKey
+        key: app.globalData.toutiaoKey
       },
       header: {
         'Content-Type': 'application/json'

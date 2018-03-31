@@ -13,7 +13,6 @@ App({
     air: '',
     forecast:'',
     day: '',
-    bmapak: 'BmGEqlUhIwl7GmzXg9NM07WVreMVkn8u',
     g_isPlayingMusic: false,
     g_currentMusicPostId: null,
     bingBase: "https://cn.bing.com",
@@ -21,6 +20,8 @@ App({
     miWeatherBase: "https://weatherapi.market.xiaomi.com",
     toutiaoBase:"https://v.juhe.cn/toutiao/index",
     BmapBase: "https://api.map.baidu.com",
+    toutiaoKey: "d7aff92835927cf98419d59bf80b02dd",
+    bmapak: 'BmGEqlUhIwl7GmzXg9NM07WVreMVkn8u',
     curBook: ""
   }
 

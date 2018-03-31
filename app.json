@@ -5,6 +5,7 @@
     "pages/movies/movies",
     "pages/switchcity/switchcity",
     "pages/weather/weather",
+    "pages/news/news",
     "pages/movies/movie-detail/movie-detail",
     "pages/movies/more-movie/more-movie",
     "pages/map/map",
@@ -34,6 +35,10 @@
       {
         "pagePath": "pages/movies/movies",
         "text": "电影"
+      },
+      {
+        "pagePath": "pages/news/news",
+        "text": "新闻"
       },
       {
         "pagePath": "pages/more/more",
